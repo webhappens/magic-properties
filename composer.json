@@ -1,7 +1,6 @@
-
 {
     "name": "webhappens/magic-properties",
-    "description": "Exposes a fluid interface for setting properties, together with a simple interface to mutating their values on get and set.",
+    "description": "Add a simple fluid interface for getters, setters, accessors and mutators to any PHP class.",
     "keywords": [
         "webhappens",
         "magic-properties",
