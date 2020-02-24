@@ -35,14 +35,14 @@ If your class is using the `__call` method already, you must use a trait method 
 
 ```php
 use MagicProperties {
-   MagicProperties::__call as __magic_properties_call
+    MagicProperties::__call as __magic_properties_call
 }
 
 public function __call($method, $arguments)
 {
-   try {
-       return $this->__magic_properties_call($method, $arguments);
-   } catch (\BadMethodCallException $e) {}
+    try {
+        return $this->__magic_properties_call($method, $arguments);
+    } catch (\BadMethodCallException $e) {}
 }
 ```
 
