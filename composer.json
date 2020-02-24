@@ -1,0 +1,53 @@
+
+{
+    "name": "webhappens/magic-properties",
+    "description": "Exposes a fluid interface for setting properties, together with a simple interface to mutating their values on get and set.",
+    "keywords": [
+        "webhappens",
+        "magic-properties",
+        "getters",
+        "setters"
+    ],
+    "homepage": "https://github.com/webhappens/magic-properties",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sam Leicester",
+            "email": "sam@webhappens.co.uk",
+            "homepage": "https://webhappens.co.uk",
+            "role": "Developer"
+        },
+        {
+            "name": "Ben Gurney",
+            "email": "ben@webhappens.co.uk",
+            "homepage": "https://webhappens.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "symfony/var-dumper": "^4.3",
+        "phpunit/phpunit": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebHappens\\MagicProperties\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WebHappens\\MagicProperties\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "fix": "vendor/bin/php-cs-fixer",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
