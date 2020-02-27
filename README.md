@@ -1,3 +1,5 @@
+![tests](https://github.com/webhappens/magic-properties/workflows/tests/badge.svg)
+
 # Magic properties
 
 Add a simple fluid interface for getters, setters, accessors and mutators to any PHP class.
