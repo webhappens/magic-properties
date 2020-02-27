@@ -8,7 +8,6 @@ use WebHappens\MagicProperties\Str;
 
 trait MagicProperties
 {
-    private $_classProperties;
 
     public function setPropertyValues($data = [])
     {
@@ -21,15 +20,6 @@ trait MagicProperties
         }
 
         return $this;
-    }
-
-    public function toArray()
-    {
-        return $this->getMagicProperties()
-            ->mapWithKeys(function ($property) {
-                return [$property => $this->getProperty($property)];
-            })
-            ->toArray();
     }
 
     protected function hasProperty($name)
