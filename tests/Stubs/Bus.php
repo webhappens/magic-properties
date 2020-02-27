@@ -4,11 +4,8 @@ namespace WebHappens\MagicProperties\Tests\Stubs;
 
 use WebHappens\MagicProperties\MagicProperties;
 
-class Bus
+class Bus extends Vehicle
 {
-    use MagicProperties;
-
-    protected $capacity = 39;
     protected $driver;
     protected $route;
     protected $callsign;

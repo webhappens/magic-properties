@@ -13,11 +13,11 @@ class MagicPropertiesTest extends TestCase
     {
         $bus = new Bus;
 
-        $this->assertEquals(39, $bus->capacity);
+        $this->assertEquals(1, $bus->capacity);
         $this->assertIsInt($bus->capacity);
-        $this->assertEquals(39, $bus->capacity());
+        $this->assertEquals(1, $bus->capacity());
         $this->assertIsInt($bus->capacity());
-        $this->assertEquals(39, $bus->getCapacity());
+        $this->assertEquals(1, $bus->getCapacity());
         $this->assertIsInt($bus->getCapacity());
     }
 
@@ -73,6 +73,10 @@ class MagicPropertiesTest extends TestCase
         $this->assertEquals('X5 - Cambridge', $bus->callsign);
         $this->assertEquals('X5 - Cambridge', $bus->callsign());
         $this->assertEquals('X5 - Cambridge', $bus->getCallsign());
+
+        $this->assertEquals('Unknown', $bus->model);
+        $this->assertEquals('Unknown', $bus->model());
+        $this->assertEquals('Unknown', $bus->getModel());
     }
 
     /** @test */
@@ -98,6 +102,8 @@ class MagicPropertiesTest extends TestCase
     public function returns_array_of_property_values()
     {
         $bus = (new Bus)
+            ->make('General Motors')
+            ->model('TDH-5303')
             ->driver('Sandra Bullock')
             ->route('33', 'Downtown')
             ->capacity(43);
@@ -107,6 +113,8 @@ class MagicPropertiesTest extends TestCase
             'driver' => 'Sandra Bullock',
             'route' => new Route('33', 'Downtown'),
             'callsign' => '33 - Downtown',
+            'make' => 'General Motors',
+            'model' => 'TDH-5303',
         ], $bus->toArray());
     }
 }
