@@ -5,7 +5,7 @@ Add a simple fluid interface for getters, setters, accessors and mutators to any
   - [Installation](#installation)
   - [Getters](#getters)
   - [Setters](#setters)
-  - [Immutable properties](#immutable-properties)
+  - [Readonly properties](#readonly-properties)
   - [Chainable setters](#chainable-setters)
   - [Accessors](#accessors)
   - [Mutators](#mutators)
@@ -100,15 +100,15 @@ The Setter "method" name may optionally be prefixed with "set" if you prefer tha
 $person->setName('Sam');
 ```
 
-## Immutable properties
+## Readonly properties
 
-If you want to protect specific `protected` properties from being set from **outside the class**, you may list them in an `$immutable` array inside your class.
+If you want to protect specific `protected` properties from being set from **outside the class**, you may list them in an `$readonly` array inside your class.
 
 ```php
-protected $immutable = ['id'];
+protected $readonly = ['id'];
 ```
 
-Immutable properties can still be changed from **inside the class** and Accessors and Mutators will still be run if the "method" syntax is used to set the value.
+Readonly properties can still be changed from **inside the class** using the standard php syntax.
 
 ## Chainable setters
 

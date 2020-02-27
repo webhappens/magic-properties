@@ -2,6 +2,7 @@
 
 namespace WebHappens\MagicProperties;
 
+use Exception;
 use BadMethodCallException;
 use WebHappens\MagicProperties\Str;
 
@@ -55,6 +56,10 @@ trait MagicProperties
 
     protected function setProperty($property, $value)
     {
+        if ($this->isReadonlyProperty($property)) {
+            throw new Exception("Property `{$property}` is readonly");
+        }
+
         if (method_exists($this, 'set'.Str::studly($property).'Property')) {
             $value = $this->{'set'.Str::studly($property).'Property'}($value);
         }
@@ -81,6 +86,20 @@ trait MagicProperties
         }
 
         return $properties;
+    }
+
+    protected function getReadonlyPropeties()
+    {
+        if (isset($this->readonly) && is_array($this->readonly)) {
+            return $this->readonly;
+        }
+
+        return [];
+    }
+
+    protected function isReadonlyProperty($property)
+    {
+        return in_array($property, $this->getReadonlyPropeties());
     }
 
     protected function getHiddenProperties()
