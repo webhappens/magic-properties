@@ -123,6 +123,10 @@ trait MagicProperties
             $name = lcfirst(str_replace('get', '', $name));
         }
 
+        if (Str::startsWith($name, 'set')) {
+            $name = lcfirst(str_replace('set', '', $name));
+        }
+
         if ($this->hasProperty($name)) {
             if (count($arguments) === 0) {
                 return $this->getProperty($name);
