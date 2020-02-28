@@ -24,7 +24,7 @@ trait MagicProperties
 
     protected function hasProperty($name)
     {
-        return array_search($name, $this->getMagicProperties()) !== false;
+        return isset($this->getMagicProperties()[$name]);
     }
 
     protected function getProperty($property)
@@ -61,21 +61,10 @@ trait MagicProperties
 
     protected function getMagicProperties()
     {
-        $properties = [];
-
-        foreach ($this->getProperties() as $name => $property) {
-            if ($property->isStatic() || $property->isPrivate()) {
-                continue;
-            }
-
-            if (in_array($name, $this->getHiddenProperties())) {
-                continue;
-            }
-
-            array_push($properties, $name);
-        }
-
-        return $properties;
+        return $this->getProperties()
+            ->visibility('public', 'protected')
+            ->default()
+            ->static(false);
     }
 
     protected function getReadonlyPropeties()
@@ -101,6 +90,11 @@ trait MagicProperties
         return [];
     }
 
+    protected function isHiddenProperty($property)
+    {
+        return in_array($property, $this->getHiddenProperties());
+    }
+
     protected function getProperties()
     {
         return ClassProperties::for($this);
@@ -108,13 +102,14 @@ trait MagicProperties
 
     protected function getPropertyValues()
     {
-        $properties = [];
+        $properties = $this->getMagicProperties()->except($this->getHiddenProperties())->keys();
 
-        foreach($this->getMagicProperties() as $property) {
-            $properties[$property] = $this->getProperty($property);
-        }
-
-        return $properties;
+        return array_combine(
+            $properties,
+            array_map(function($property) {
+                return $this->getProperty($property);
+            }, $properties)
+        );
     }
 
     public function __call($name, $arguments)
