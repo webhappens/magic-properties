@@ -21,30 +21,26 @@ Install via composer:
 composer require webhappens/magic-properties
 ```
 
-Import the class into your namespace:
+Insert the `MagicProperties` trait into your class:
 
 ```php
-use WebHappens\MagicProperties\MagicProperties;
+use \WebHappens\MagicProperties\MagicProperties;
 ```
 
-If your class is not currently using the `__call` method, you may simply `use` the trait.
+If your class is already using the `__call` method, add the following to it:
 
 ```php
-use MagicProperties;
-```
-
-If your class is using the `__call` method already, you must use a trait method alias and call it from within your existing `__call` method.
-
-```php
-use MagicProperties {
-    MagicProperties::__call as __magic_properties_call
-}
-
 public function __call($method, $arguments)
 {
-    try {
-        return $this->__magic_properties_call($method, $arguments);
-    } catch (\BadMethodCallException $e) {}
+    // ...
+
+    if ($property = $this->matchMagicProperty($name)) {
+        return $this->callMagicProperty($property, $arguments);
+    }
+
+    // ...
+
+    // throw new \BadMethodCallException();
 }
 ```
 
@@ -191,6 +187,8 @@ Call the `getMagicProperties` method to serialize all `public` and `protected` p
 - Sam Leicester: sam@webhappens.co.uk
 - Ben Gurney: ben@webhappens.co.uk
 - [All Contributors](../../contributors)
+
+Our `Str` class is just a copy of some functions from Laravel's `Str` helper.
 
 ## License
 

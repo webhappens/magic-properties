@@ -112,31 +112,40 @@ trait MagicProperties
         );
     }
 
+    protected function matchMagicProperty($property)
+    {
+        $property = preg_replace('/^(get|set)/', '', $property);
+
+        if ($this->hasProperty($property)) {
+            return $property;
+        }
+    }
+
     public function __call($name, $arguments)
     {
-        if (Str::startsWith($name, 'get')) {
-            $name = lcfirst(str_replace('get', '', $name));
-        }
-
-        if (Str::startsWith($name, 'set')) {
-            $name = lcfirst(str_replace('set', '', $name));
-        }
-
-        if ($this->hasProperty($name)) {
-            if (count($arguments) === 0) {
-                return $this->getProperty($name);
-            }
-
-            if (count($arguments) === 1) {
-                return $this->setProperty($name, $arguments[0]);
-            }
-
-            return $this->setProperty($name, $arguments);
+        if ($property = $this->matchMagicProperty($name)) {
+            return $this->callMagicProperty($property, $arguments);
         }
 
         throw new BadMethodCallException(sprintf(
-            'Call to undefined method %s::%s()', static::class, $name
+            'Call to undefined method %s::%s()',
+            static::class,
+            $name
         ));
+    }
+
+    public function callMagicProperty($property, $arguments)
+    {
+        switch (count($arguments)) {
+            case 0:
+                return $this->getProperty($property);
+
+            case 1:
+                return $this->setProperty($property, $arguments[0]);
+
+            default:
+                return $this->setProperty($property, $arguments);
+        }
     }
 
     public function __get($key)
