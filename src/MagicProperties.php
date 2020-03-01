@@ -114,7 +114,9 @@ trait MagicProperties
 
     protected function matchMagicProperty($property)
     {
-        $property = preg_replace('/^(get|set)/', '', $property);
+        if (Str::startsWith($property, ['get', 'set'])) {
+            $property = lcfirst(str_replace(['get', 'set'], '', $property));
+        }
 
         if ($this->hasProperty($property)) {
             return $property;
