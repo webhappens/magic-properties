@@ -63,6 +63,7 @@ trait MagicProperties
     {
         return $this->getProperties()
             ->visibility('public', 'protected')
+            ->except('readonly', 'hidden')
             ->default()
             ->static(false);
     }
