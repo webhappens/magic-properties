@@ -5,6 +5,7 @@ namespace WebHappens\MagicProperties\Tests;
 use Exception;
 use WebHappens\MagicProperties\Tests\Stubs\Bus;
 use WebHappens\MagicProperties\Tests\Stubs\Route;
+use WebHappens\MagicProperties\Tests\Stubs\Vehicle;
 
 class MagicPropertiesTest extends TestCase
 {
@@ -43,6 +44,34 @@ class MagicPropertiesTest extends TestCase
         $this->assertEquals('Bob', $bus->driver);
         $this->assertEquals('Bob', $bus->driver());
         $this->assertEquals('Bob', $bus->getDriver());
+    }
+
+    /** @test */
+    public function can_check_a_property_isset()
+    {
+        $car = new Vehicle;
+
+        $this->assertTrue(isset($car->make));
+        $this->assertTrue(isset($car->model));
+        $this->assertTrue(isset($car->capacity));
+
+        $this->assertFalse(isset($car->wings));
+        $this->assertFalse(isset($car->secondStageThrusters));
+        $this->assertFalse(isset($car->otherNoneExistantProperty));
+    }
+
+    /** @test */
+    public function can_unset_a_property()
+    {
+        $car = new Vehicle;
+
+        $car->make('Smart')->model('ForTwo')->capacity(2);
+
+        $this->assertEquals(2, $car->capacity);
+
+        unset($car->capacity);
+
+        $this->assertNull($car->capacity);
     }
 
     /** @test */

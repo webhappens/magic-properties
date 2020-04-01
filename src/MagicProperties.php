@@ -151,6 +151,18 @@ trait MagicProperties
         }
     }
 
+    public function __isset($key)
+    {
+        return $this->hasProperty($key);
+    }
+
+    public function __unset($key)
+    {
+        if ($this->hasProperty($key)) {
+            $this->{$key} = null;
+        }
+    }
+
     public function __get($key)
     {
         return $this->getProperty($key);
