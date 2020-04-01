@@ -24,11 +24,15 @@ trait MagicProperties
 
     protected function hasProperty($name)
     {
+        $name = $this->normalisePropertyName($name);
+
         return isset($this->getMagicProperties()[$name]);
     }
 
     protected function getProperty($property)
     {
+        $property = $this->normalisePropertyName($property);
+
         if ( ! $this->hasProperty($property)) {
             trigger_error(sprintf(
                 'Undefined property %s::%s', static::class, $property
@@ -46,6 +50,8 @@ trait MagicProperties
 
     protected function setProperty($property, $value)
     {
+        $property = $this->normalisePropertyName($property);
+
         if ($this->isReadonlyProperty($property)) {
             throw new Exception("Property `{$property}` is readonly");
         }
@@ -122,6 +128,11 @@ trait MagicProperties
         if ($this->hasProperty($property)) {
             return $property;
         }
+    }
+
+    protected function normalisePropertyName($name)
+    {
+        return Str::camel($name);
     }
 
     public function __call($name, $arguments)
