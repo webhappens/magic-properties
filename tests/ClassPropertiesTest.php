@@ -19,6 +19,7 @@ class ClassPropertiesTest extends TestCase
         $this->assertSame($busProperties, ClassProperties::for(Bus::class));
     }
 
+    /** @test */
     public function all_properties_are_returned()
     {
         $expected = [
