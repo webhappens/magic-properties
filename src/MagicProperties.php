@@ -11,7 +11,7 @@ trait MagicProperties
 
     public function setPropertyValues($data = [])
     {
-        foreach ((array) $data as $property => $value) {
+        foreach ($data as $property => $value) {
             if ( ! $this->hasProperty($property)) {
                 continue;
             }
