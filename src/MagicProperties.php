@@ -12,7 +12,7 @@ trait MagicProperties
     public function setPropertyValues($data = [])
     {
         foreach ($data as $property => $value) {
-            if ( ! $this->hasProperty($property)) {
+            if ( ! $this->hasProperty($property) || $this->isReadonlyProperty($property)) {
                 continue;
             }
 
